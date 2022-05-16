@@ -42,6 +42,7 @@
 		let gameHint = document.createElement('P')
 		gameHint.className= 'hint'
 		gameHint.textContent = gameConfig.currentHint
+		gameHint.innerHTML += '<br> <span id='response'></span>'
 		
 		let gameContainer = document.createElement('DIV') // pos el contenedor es solo uno por palabra.
 		gameContainer.className = 'gameContainer'
@@ -174,7 +175,7 @@
 
 
 		winAnimation(false)
-		
+		document.getElementById('response').textContent = gameConfig.currentWord
 	}
 
 
