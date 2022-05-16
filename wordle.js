@@ -42,7 +42,9 @@
 		let gameHint = document.createElement('P')
 		gameHint.className= 'hint'
 		gameHint.textContent = gameConfig.currentHint
-		gameHint.innerHTML += '<br> <span id='response'></span>'
+		
+		let response = document.createElement('P')
+		response.className = 'response'
 		
 		let gameContainer = document.createElement('DIV') // pos el contenedor es solo uno por palabra.
 		gameContainer.className = 'gameContainer'
@@ -69,6 +71,7 @@
 
 		gameSection.appendChild(gameContainer)
 		gameSection.appendChild(gameHint)
+		gameSection.appendChild(response)
 
 		sliding.appendChild(gameSection)
 
@@ -175,7 +178,7 @@
 
 
 		winAnimation(false)
-		document.getElementById('response').textContent = gameConfig.currentWord
+		document.getElementById('response').textContent = `La respuesta era: ${gameConfig.currentWord}`
 	}
 
 
