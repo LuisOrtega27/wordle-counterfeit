@@ -178,7 +178,7 @@
 
 
 		winAnimation(false)
-		document.getElementById('response').textContent = `La respuesta era: ${gameConfig.currentWord}`
+		document.getElementByClassName('response').textContent = `La respuesta era: ${gameConfig.currentWord}`
 	}
 
 
