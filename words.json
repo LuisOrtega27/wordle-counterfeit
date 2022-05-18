@@ -1,177 +1,142 @@
 [
     {
-      "palabra" :   "SALTAR", 
-      "tags"    :   ["saltar", "jump"], 
-      "pista"   :   "Elevarse del suelo u otra superficie con impulso para caer en el mismo lugar o en otro"
+      "palabra":   "SALTAR", 
+      "pista":   "Elevarse del suelo u otra superficie con impulso para caer en el mismo lugar o en otro"
     },
     {
       "palabra":"PEZ",
-      "tags":["PEZ"],
       "pista":"Animal acuático vertebrado"
     },
     {
-      "palabra":"ZAR",
-      "tags":["ZAR"],
-      "pista":"Antiguo soberano de Rusia y Bulgaria"
+      "palabra":"eeeeoo",
+      "pista":"eeeeoo"
     },
     {
       "palabra":"JET",
-      "tags":["JET"],
       "pista":"Avión de reacción"
     },
     {
       "palabra":"OLAS",
-      "tags":["OLAS"],
-      "pista":"Agua de mar o río, agitada"
+      "pista":"Condenzacion en caida de goticulas del compuesto quimico H2O"
     },
     {
       "palabra":"ASNO",
-      "tags":["ASNO"],
-      "pista":"Animal solípedo, doméstico"
+      "pista":"Animal de granja no muy intelijente"
     },
     {
       "palabra":"TIZA",
-      "tags":["TIZA"],
       "pista":"Arcilla blanca terrosa"
     },
     {
-      "palabra":"PATO",
-      "tags":["PATO"],
-      "pista":"Ave acuática, palmípeda y lamelirrostra"
+      "palabra":"PATOS",
+      "pista":"Un homosexual y esta ave se parece en que ambos son bien..."
     },
     {
       "palabra":"SPRAY",
-      "tags":["SPRAY"],
       "pista":"Aerosol (palabra inglesa)"
     },
     {
-      "palabra":"BALIN",
-      "tags":["BALIN"],
-      "pista":"Bala de pequeño calibre - Enano"
+      "palabra":"AAAAAAH",
+      "pista":"AAAAAAAAH"
     },
     {
       "palabra":"RULOS",
-      "tags":["RULOS"],
-      "pista":"Bolas, cilindros en el cabello, ruedas"
+      "pista":"Cabello con forma espiral"
     },
     {
-      "palabra":"REMAR",
-      "tags":["REMAR"],
-      "pista":"Mover los remos de una embarcación para hacerla avanzar"
+      "palabra":"CHAVEZ",
+      "pista":"Adivina el personaje: 'Ser Rico es malo', 'que es eso? expropiese!'"
     },
     {
       "palabra":"BOZAL",
-      "tags":["BOZAL"],
-      "pista":"Aparato que se pone en la boca de ciertos animales, especialmente de los perros, para que no muerdan"
+      "pista":"Aparato que se pone en la boca de ciertos animales para que no muerdan"
     },
     {
       "palabra":"LLAMA",
-      "tags":["LLAMA"],
-      "pista":"Camélido de los Andes"
+      "pista":"Unico animal auctoctono que conoces de Peru"
     },
     {
-      "palabra":"DIODO",
-      "tags":["DIODO"],
-      "pista":"Lámpara de dos electrodos"
+      "palabra":"DIO",
+      "pista":"Pensabas que era una referencia, pero soy yo... "
     },
     {
-      "palabra":"ORUGA",
-      "tags":["ORUGA"],
-      "pista":"Larva de los insectos lepidópteros"
+      "palabra":"COLORES",
+      "pista":"Para gustos..."
     },
     {
-      "palabra":"MISAL",
-      "tags":["MISAL"],
-      "pista":"Libro que contiene las oraciones de misa"
+      "palabra":"FRIKI",
+      "pista":"Frase: 'se la pasa viendo anime y esas monas chinas, es todo un...'"
     },
     {
-      "palabra":"FRENO",
-      "tags":["FRENO"],
-      "pista":"Lo que detiene"
+      "palabra":"FRENOS",
+      "pista":"Frase: 'mi amigo esta aprendiendo a manejar, no nos matamos el otro dia porque el auto tiene...'"
     },
     {
-      "palabra":"ARENA",
-      "tags":["ARENA"],
-      "pista":"Lugar de combate"
+      "palabra":"ARENENO",
+      "pista":"Baño de los gatos"
     },
     {
       "palabra":"LEMUR",
-      "tags":["LEMUR"],
-      "pista":"Mamífero de Madagascar"
+      "pista":"El rey Julien de la pelicula Madagascar, es un..."
     },
     {
       "palabra":"DRAGA",
-      "tags":["DRAGA"],
       "pista":"Máquina excavadora"
     },
     {
       "palabra":"CROMO",
-      "tags":["CROMO"],
       "pista":"Metal cuyas combinaciones cambia el color de las pinturas"
     },
     {
       "palabra":"BOCETO",
-      "tags":["BOCETO"],
       "pista":"Apunte, bosquejo"
     },
     {
       "palabra":"TOCINO",
-      "tags":["TOCINO"],
       "pista":"Carne gorda de los cerdos"
     },
     {
       "palabra":"NAVAJA",
-      "tags":["NAVAJA"],
       "pista":"Cortaplumas"
     },
     {
       "palabra":"ADEREZO",
-      "tags":["ADEREZO"],
       "pista":"Adobo, condimento"
     },
     {
       "palabra":"RASURAR",
-      "tags":["RASURAR"],
       "pista":"Afeitarse"
     },
     {
       "palabra":"SORTIJA",
-      "tags":["SORTIJA"],
       "pista":"Anillo de bodas"
     },
     {
       "palabra":"ANDAMIO",
-      "tags":["ANDAMIO"],
       "pista":"Armazón de tablas, en construcción"
     },
     {
       "palabra":"BIPLANO",
-      "tags":["BIPLANO"],
       "pista":"Avión de cuatro alas"
     },
     {
       "palabra":"FRAGATA",
-      "tags":["FRAGATA"],
       "pista":"Buque de tres palos"
     },
     {
       "palabra":"COLADOR",
-      "tags":["COLADOR"],
       "pista":"Sirve para colar"
     },
     {
       "palabra":"ESCRITO",
-      "tags":["ESCRITO"],
       "pista":"Cualquier papel manuscrito"
     },
     {
       "palabra":"NUPCIAL",
-      "tags":["NUPCIAL"],
       "pista":"De las bodas"
     },
     {
       "palabra":"FLORIDO",
-      "tags":["FLORIDO"],
       "pista":"Dícese del estilo elegante"
     }
   ]
