@@ -1,5 +1,7 @@
 :root{
     --gameColumnDimentions: 65px;
+    --bgColumnColor: #28e;
+    --bgColor: rgb(26, 49, 71);
 }
 *{
     padding: 0;
@@ -7,7 +9,11 @@
     box-sizing: border-box;
 }
 
-
+body{
+    font-size: 14px;
+    color: #fff;
+    background: var(--bgColor)
+}
 
 .wrapper{
     position: relative;
@@ -16,7 +22,6 @@
     height: 100vh;
     width: 100vw;
     font-family: Arial, Helvetica, sans-serif;
-    background: rgb(26, 49, 71);
 }
 .title{
     font-size: 3em;
@@ -26,10 +31,26 @@
     text-align: center;
 }
 
+#gameInfo{
+    position: absolute;
+    width: 200px;
+    background: #0005;
+    border-radius: 0px 5px 5px 0px;
+}
+#gameInfo > h4{
+    padding: 5px;
+    text-align: center;
+}
 
-
+#answeredList{
+    background: #0005;
+    padding: 25px;
+    border-radius: 0px 0px 5px 5px;
+}
+#answeredList> li{
+    margin-bottom: 5px;
+}
 .gameSlider{
-    /* background: #fff; */
     overflow-x: hidden;
 }
 .sliding{
@@ -42,11 +63,11 @@
     width: 100vw;
 }
 .gameContainer{
-    background: #0005;
+    background: #0008;
     margin: auto;
     width: fit-content;
     padding: 4px;
-    border-radius: 4px;
+    border-radius: 5px;
 }
 .gameRow{
     display: flex;
@@ -58,10 +79,10 @@
     width: var(--gameColumnDimentions);
     font-size: 55px;
     font-weight: 600;
-    color: #fff;
     text-align: center;
     margin: 2px;
-    background: #28e;
+    background: var(--bgColumnColor);
+    border-radius: 5px;
 }
 
 
@@ -76,19 +97,37 @@
     background-color: #888;
 }
 
+.scale-down-animation{
+    animation: scale-down-animation 0.2s;
+    transform: scale(5px);
+}
 
+@keyframes scale-down-animation {
+    from{
+        transform: scale(0.8);
+    }
+    to{
+        transform: scale(1);
+    }
+}
 
-.hint{
+.hint, .correct-answer{
     text-align: center;
-    font-size: 1.2em;
-    color: #ccc;
-    margin-top: 20px;
+    margin: 5px auto;
+    background-color: #0009;
+    padding: 15px;
+    width: fit-content;
+    border-radius: 5px;
+    max-width: 400px;
+}
+
+.correct-answer{
+    display: none;
+    font-weight: 900;
 }
 
 
-
 .winAnimation-bg{
-    /* display: none; */
     position: absolute;
     top: 0;
     left: 0;
@@ -105,7 +144,7 @@
     width: fit-content;
     padding: 20px;
     
-    font-size: 3em;
+    font-size: 2em;
     font-weight: 900;
     background-color: #fff;
     border-radius: 10px;
@@ -118,11 +157,6 @@
     color: #e22;
 }
 
-.response{
-    font-weight: 900;
-    color: #fff;
-    text-align: center;
-}
 
 
 @keyframes slideDown {
@@ -142,4 +176,16 @@
         transform: translate(-50%, 400%);
         opacity: 0;
     }
+}
+
+@keyframes slide-down-center{
+    0%{
+        transform: translate(-50%, -400%);
+        opacity: 0;
+    }
+    100%{
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+
 }
