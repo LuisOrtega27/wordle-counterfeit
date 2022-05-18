@@ -8,28 +8,50 @@
 
 	const wrapper = document.querySelector('.wrapper')
 
-
 	let gameConfig = {
 		wordList: [], // se hace fetch a un json con la lista de palabras y se guarda aqui.		
 		currentWord: '', // la palabra actual :v.
 		currentHint: '', // lo guardo aca solo porque me da lala, tener que buscarlo.
-		currentRow: 0, // en que fila se encuantra (son 4, 4 intentos para formar la palabra)
-		currentColumn: -1, // para saber en que cuadro debo insertar la letra.
-		// letterLength: 0, // numero de letras de la plabra? o yo que se
+		currentRow: 0, // para saber en que fila se encuantra (son 4, 4 intentos para formar la palabra)
+		currentColumn: -1, // para saber en que cuadro debo insertar la letra. (tiene que empezar en '-1' porque no se como hacerlo de otra manera xD)
 		usedWords: [], // lista de palabras usadas.
-		showWord: false, // cuando pierdes cambia a true y muestra la palabra debajo de la pista.
 		winsNumber: 0, // no solo para saber el numero de victorias. Tambien es para seleccionar el tablero d juego en curso.
-		correctKeys: ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ñ', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ' '], // pos la letras que se pueden ingresar en el juego.
-		trys: [[],[],[],[]]
+		correctKeys: ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ñ', 'z', 'x', 'c', 'v', 'b', 'n', 'm'], // pos la letras que se pueden ingresar en el juego.
+		trys: [[],[],[],[]],
+		frases: {
+			wins: ['Muy bien!', 'Yay!!', 'Si se puede!', 'Una mas :D', 'No te rindas!'],
+			Lose: ['Lastima...', 'Seguro la proxima', 'Solo pierdes si te rindes']
+		}
 	}
 
+	const setRandomBgColor = ()=>{
+		
 
+		// Hue (color en 360deg) 
+		let h= Math.floor(Math.random() * 360)
+		
+		// Saturation (la saturacion hasta 100%)
+		// s= Math.floor(Math.random() * 100)
+
+		// Lightness (el brillo hasta 100%)
+		// l= Math.floor(Math.random() * 100)
+
+
+		document.body.style.setProperty( '--bgColor', `hsl(${h}, 50%, 60%)` )
+
+		// console.log(document.body.style.getPropertyValue('--bgColor'))
+	}
+
+	
 
 	const createNewGameDisplay = ()=>{
 
+		if(gameConfig.wordList.length == 0) return endGame()
+
+		//este es el tablero de juego
+
 		getRandomWord(gameConfig.wordList)
 
-		console.log(gameConfig.currentHint)
 		// no se si es mejor hacer esto con tamplate string
 		// esta parte es escencialmente meter unas cosas dentro de otras.
 
@@ -42,9 +64,9 @@
 		let gameHint = document.createElement('P')
 		gameHint.className= 'hint'
 		gameHint.textContent = gameConfig.currentHint
-		
-		let response = document.createElement('P')
-		response.className = 'response'
+
+		let correctAnswer = document.createElement('P')
+		correctAnswer.className = 'correct-answer'
 		
 		let gameContainer = document.createElement('DIV') // pos el contenedor es solo uno por palabra.
 		gameContainer.className = 'gameContainer'
@@ -71,61 +93,112 @@
 
 		gameSection.appendChild(gameContainer)
 		gameSection.appendChild(gameHint)
-		gameSection.appendChild(response)
+		gameSection.appendChild(correctAnswer)
 
 		sliding.appendChild(gameSection)
 
-		console.log('Creando nuevo tablero de juego')
+		// console.log('Creando nuevo tablero de juego')
+		// console.log(gameConfig.wordList)
 
 	}
 
 
+	const endGame = ()=>{
+		
+		let endMsg = document.createElement('DIV')
+		endMsg.className= 'winAnimation-bg'
+
+		endMsg.innerHTML = `
+			<div class="winAnimation win" style='animation: slide-down-center 1.5s linear forwards;'>
+				<h2 style='animation: none;'>Completaste el juego</h2>
+				<small>Pronto nuevas actualizaciones ;D</small>
+			</div>
+		`;
+
+		wrapper.appendChild(endMsg)
+	}
 
 	const getRandomWord = ()=>{
 
 		let randomNumber = Math.floor(Math.random() * gameConfig.wordList.length) // numero random.
+
 
 		gameConfig.currentWord = gameConfig.wordList[randomNumber].palabra // guardar la palabra actual.
 		gameConfig.currentHint = gameConfig.wordList[randomNumber].pista // guardar la pista actual.
 		gameConfig.usedWords.push(gameConfig.currentWord) // añadir la plabra actual a la lista de palabras usadas. (PS no se si use esta lista).
 
 
-		let position = gameConfig.wordList.findIndex(w=> w.palabra == gameConfig.randomWord) // obtener la posicion de la palabra actual.
+		let position
+		gameConfig.wordList.map(({palabra}, index)=>{ 	
+			if(gameConfig.currentWord == palabra) position= index
+		}) // obtener la posicion de la palabra actual.
+		
+		// console.log(position, gameConfig.currentWord)
+		
 		gameConfig.wordList.splice(position, 1) // y quitarlo de la lista de palabras.
 
 	}
 
 
 
-	window.addEventListener('load', async(e)=>{ // lo primero que se ejecuta es esto, el fetch a la lista de palabras.
+	window.addEventListener('load', async()=>{ // lo primero que se ejecuta es esto, el fetch a la lista de palabras.
+		
 		gameConfig.wordList = await fetch('./words.json') // obtener info blah blah blah.
 		.then(res => res.json())
 		.then(res => res )
 
+		setRandomBgColor()
+
 		 // la primera vez se ejecuta aqui.
 		createNewGameDisplay() // esta funcion crea todo el tablero de juego. se envia la palabra actual
+
 	})
 
 
 
-	let screenWidth = 0
-	const moveSlidingRigth = ()=>{
+	
+	const moveSlidingLeft = ( screenWidth = 0 )=>{
 
-		screenWidth += sliding.children[gameConfig.winsNumber].clientWidth
-		sliding.style.transform = `translateX(-${screenWidth}px)`
+		let timer = screenWidth==0? 0: 1000
 
+		setTimeout(()=>{
+
+			if(screenWidth == 0) sliding.style.transition = 'transform 0s ease'
+			
+			sliding.style.transform = `translateX(-${screenWidth}px)`
+
+			
+			setRandomBgColor()
+			
+		}, timer)
+		
+		sliding.style.transition = 'transform 0.6s ease'
+		
 	}
 
 
 
 	const winAnimation = (bool)=>{
+
 		
+		let limit = bool? gameConfig.frases.wins.length : gameConfig.frases.Lose.length
+
+		let randomNumber = Math.floor( Math.random() * limit )
+
+		
+		let frase = bool? gameConfig.frases.wins[randomNumber] : gameConfig.frases.Lose[randomNumber]
+
+		
+		// console.log(Math.floor( Math.random() * limit ))
+
+		
+
 		let msg_bg = document.createElement('DIV')
 		msg_bg.className= 'winAnimation-bg'
 
 		msg_bg.innerHTML= `
-			<div class="winAnimation ${bool? 'win': 'lose'}">
-				<h2>${bool? 'GANASTE! :D': 'PERDISTE! :P'}</h2>
+			<div class="winAnimation ${bool? 'win' : 'lose'}">
+				<h2>${frase}</h2>
 			</div>
 		`;
 
@@ -134,32 +207,57 @@
 		
 		msg_bg.addEventListener('animationend', ()=> wrapper.removeChild(msg_bg) )
 
-		
-		// console.log(bool)
-		
-		// <div class="winAnimation-bg">
-		// 	<div class="winAnimation">
-		// 		<h2>GANASTE!</h2>
-		// 	</div>
-		// </div>
 	}
 
+	const resetGameDefaultValues = () =>{
+		gameConfig.currentRow= 0
+		gameConfig.currentColumn= -1
+		gameConfig.winsNumber= 0
+		gameConfig.trys= [[],[],[],[]]
+	}
 
+	const modifyUserPoints= (addNew)=>{
+
+		if(addNew){
+
+			// mostrar partidas ganadas
+			document.querySelector('#userPoints').textContent = gameConfig.winsNumber
+			
+			let li = document.createElement('LI')
+			li.textContent = gameConfig.currentWord
+			
+			document.querySelector('#answeredList').appendChild(li)
+			
+		}else{
+
+			// Reseterar
+			document.querySelector('#userPoints').textContent = gameConfig.winsNumber
+			
+			document.querySelector('#answeredList').innerHTML= null
+			
+		}
+		
+	}
 
 	const userWins = ()=>{
 
+		
 		gameConfig.currentRow= 0
 		gameConfig.currentColumn= -1
 		gameConfig.winsNumber+= 1
 		gameConfig.trys= [[],[],[],[]]
+		
+		
+		modifyUserPoints(true)
+
 
 		console.log('User Wins!!')
 
 
 		createNewGameDisplay() // esta funcion crea todo el tablero de juego. se envia la palabra actual
 
-
-		moveSlidingRigth()
+		let screenWidth = wrapper.clientWidth * gameConfig.winsNumber
+		moveSlidingLeft(screenWidth)
 
 		// console.log(gameConfig)
 
@@ -168,17 +266,47 @@
 		
 	}
 
+	
+	const resetDefaultCoords = (e)=>{
+		if(e.key == 'Enter') resetGame(resetDefaultCoords)
+	}
+
+	const resetGame = async(resetDefaultCoords)=>{
+
+		modifyUserPoints(false)
+		
+		sliding.innerHTML= null
+		console.log('borrando tablero de juego actual.')
+		
+		gameConfig.wordList = await fetch('./words.json')
+		.then(res => res.json())
+		.then(res => res )
+		
+		
+		moveSlidingLeft()
+		createNewGameDisplay()
+		resetGameDefaultValues()
 
 
+		window.removeEventListener('keydown', resetDefaultCoords)
+	}
+	
 	const userLose = ()=>{
-		gameConfig.currentRow= 0
-		gameConfig.currentColumn= -1
-		gameConfig.winsNumber= 0
-		gameConfig.trys= [[],[],[],[]]
+		
+			let currentAnswer= document.querySelectorAll('.correct-answer')[gameConfig.winsNumber]
+			currentAnswer.style.display = 'block'
+			currentAnswer.classList.add('scale-down-animation')
+			currentAnswer.innerHTML = `--> Respuesta: ${gameConfig.currentWord} <--`		
 
-
-		winAnimation(false)
-		document.querySelector('.response').textContent = `La respuesta era: ${gameConfig.currentWord}`
+			
+			resetGameDefaultValues()
+			
+			
+			winAnimation(false)
+			
+			
+			window.addEventListener('keydown', resetDefaultCoords)	
+			
 	}
 
 
@@ -187,7 +315,7 @@
 		
 		gameConfig.trys[gameConfig.currentRow][gameConfig.currentColumn] = bool
 
-
+		// este es para confirmar cuarquier fila
 		if(gameConfig.trys[gameConfig.currentRow].length == gameConfig.currentWord.length){
 
 			let win= gameConfig.trys[gameConfig.currentRow].find(b=> b == false) // si encuentra un 'false' en la lista, lo retorna. si no lo encuenta  retorna 'undefined'.
@@ -197,6 +325,8 @@
 
 		}
 
+
+		// este es para comfirmar solo la ultima fila (con este pierdes)	
 		if(gameConfig.trys[3].length == gameConfig.currentWord.length){
 
 			let win= gameConfig.trys[gameConfig.currentRow].find(b=> b == false)
@@ -240,59 +370,82 @@
 			bool = false
 		}
 
+		currentBox.classList.add('scale-down-animation')
+		
 		verifyWin(bool)
 
 	}
 
 
+	// Esta funcionalidad todabia esta en proceso!!
+
+	// const lineJump = ()=>{
+
+	// 		console.log(gameConfig.currentRow)
+
+	// 		let currentGameContainer = document.querySelectorAll('.gameContainer')[gameConfig.winsNumber]
+			
+	// 		for (let i = 0; i < gameConfig.currentWord.length; i++){			
+	// 			currentGameContainer.children[gameConfig.currentRow].children[i].classList.add('letter-wrong', 'scale-down-animation')
+	// 			gameConfig.trys[gameConfig.currentRow][i] = false
+	// 		}
+			
+	// 		gameConfig.currentRow += 1
+	// }
+
+
 
 	const insertLetter = (k)=>{
 
-		// esto selecciona en cual de las secciones de juego en el que escribir 
-		let gameSections = document.querySelectorAll('.gameSection')
-		let gameContainer = gameSections[gameConfig.winsNumber].children[0]
-		let rows = gameContainer.children
 
-		
-		if(gameConfig.currentColumn < gameConfig.currentWord.length - 1){
+			// esto selecciona en cual de las secciones de juego en el que escribir 
+			let gameSections = document.querySelectorAll('.gameSection')
+			let gameContainer = gameSections[gameConfig.winsNumber].children[0]
+			let rows = gameContainer.children
 
-			// cambiar de column
-
-			gameConfig.currentColumn += 1
-		
-			// es solo recorrer un array de 2 dimenciones.
-			rows[gameConfig.currentRow].children[gameConfig.currentColumn].textContent = k
-			// console.log('row: ' + gameConfig.currentRow, 'Col: ' + gameConfig.currentColumn)
-
-			let currentBox = rows[gameConfig.currentRow].children[gameConfig.currentColumn]
-			verifyLetterMatch(k, currentBox)
 			
-		}else{
+			if(gameConfig.currentColumn < gameConfig.currentWord.length - 1){
 
-			// cambiar de row
+				// cambiar de column
 
-			gameConfig.currentColumn = 0
-			gameConfig.currentRow += 1 
-
-			rows[gameConfig.currentRow].children[gameConfig.currentColumn].textContent = k
-			// console.log('row: ' + gameConfig.currentRow, 'Col: ' + gameConfig.currentColumn)
-
-			let currentBox = rows[gameConfig.currentRow].children[gameConfig.currentColumn]
-			verifyLetterMatch(k, currentBox)
+				gameConfig.currentColumn += 1
 			
-		}
+				// es solo recorrer un array de 2 dimenciones.
+				rows[gameConfig.currentRow].children[gameConfig.currentColumn].textContent = k
+				// console.log('row: ' + gameConfig.currentRow, 'Col: ' + gameConfig.currentColumn)
+
+				let currentBox = rows[gameConfig.currentRow].children[gameConfig.currentColumn]
+
+				verifyLetterMatch(k, currentBox)
+				
+			}else{
+
+				// cambiar de row
+
+				gameConfig.currentColumn = 0
+				gameConfig.currentRow += 1 
+
+				rows[gameConfig.currentRow].children[gameConfig.currentColumn].textContent = k
+				// console.log('row: ' + gameConfig.currentRow, 'Col: ' + gameConfig.currentColumn)
+
+				let currentBox = rows[gameConfig.currentRow].children[gameConfig.currentColumn]
+				verifyLetterMatch(k, currentBox)
+				
+			}
 
 	}
 
+	const keyUpHandler = (letter)=>{
+		gameConfig.correctKeys.map(correct=> { // esto filtra que letras activan la insercion de letra.
+			if(letter == correct) insertLetter(letter.toUpperCase())
+		})
+	}
 
 
 	window.addEventListener('keyup', (e)=>{
 		
-		let key = e.key
-
-		gameConfig.correctKeys.map(w=> { // esto filtra que letras activan la insercion de letra.
-			if(key == w) insertLetter(key.toUpperCase())
-		})
+		keyUpHandler(e.key)
 
 	})
+
 
