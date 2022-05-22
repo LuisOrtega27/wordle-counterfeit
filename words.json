@@ -104,8 +104,8 @@
       "pista":"Nombre comun del cloruro de sodio"
     },
     {
-      "palabra":"RASURAR",
-      "pista":"Nombra una moneda con poco o nungun valor"
+      "palabra":"BOLIVAR",
+      "pista":"Moneda nacional con poco o nungun valor"
     },
     {
       "palabra":"DIAMANTE",
@@ -140,3 +140,4 @@
       "pista":"Nombre comun de los politicos"
     }
   ]
+
