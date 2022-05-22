@@ -31,6 +31,77 @@ body{
     text-align: center;
 }
 
+#instructions{
+    position: absolute;
+    right: 30px;
+    top: 60px;
+    max-width: 250px;
+}
+#instructions-title{
+    text-align: center;
+    margin-bottom: 10px;
+}
+#icon{
+    cursor: pointer;
+    margin: auto;
+    width: fit-content;
+    padding: 8px;
+    background-color: #000;
+    border-radius: 5px;
+}
+
+.arrow{
+    margin: 0;
+    display: inline-block;
+    border: solid 4px transparent;
+    border-left: solid 4px #fff;
+    transition: transform 0.6s ease;
+}
+.arrow-down{
+    transform: rotate(90deg);
+}
+
+#instructions-list{
+    overflow: hidden;
+    max-height: 0px;
+    padding-left: 30px;
+    background: #0008;
+    border-radius: 5px;
+    transition: max-height 0.6s ease;
+    text-align:justify;
+}
+#instructions-list li{
+    margin-bottom: 10px;
+}
+#instructions-list li ul{
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+
+.open-list{
+    max-height: 1000px !important;
+    padding: 10px;
+}
+
+
+.ins-grey{
+    background-color: #8888;
+}
+.ins-yellow{
+    background-color: #ee08;
+}
+.ins-green{
+    background-color: #2e28;
+}
+
+
+
+
+
+
+
+
 #gameInfo{
     position: absolute;
     width: 200px;
@@ -74,6 +145,12 @@ body{
     width: fit-content;
     height: fit-content;
 }
+.currentRow{
+    outline: solid 2px #fff;
+    /* outline-offset: -2px; */
+    border-radius: 5px;
+}
+
 .gameColumn{
     height: var(--gameColumnDimentions);
     width: var(--gameColumnDimentions);
@@ -189,3 +266,4 @@ body{
     }
 
 }
+
