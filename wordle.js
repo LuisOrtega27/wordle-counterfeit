@@ -1,5 +1,17 @@
 'use strict'
 
+
+
+	let icon = document.querySelector('#icon')
+	icon.addEventListener('click', ()=>{
+		document.querySelector('#instructions-list').classList.toggle('open-list')
+		document.querySelector('.arrow').classList.toggle('arrow-down')
+	})
+
+
+
+
+
 	// ni pta idea de como hacer funcionar esto xD
 
 	// const gameRow = document.querySelectorAll('gameRow')
@@ -209,12 +221,16 @@
 
 	}
 
-	const resetGameDefaultValues = () =>{
+
+
+	const resetGameDefaultValues = (bool) =>{
 		gameConfig.currentRow= 0
 		gameConfig.currentColumn= -1
-		gameConfig.winsNumber= 0
+		gameConfig.winsNumber= bool? 0: gameConfig.winsNumber+1
 		gameConfig.trys= [[],[],[],[]]
 	}
+
+
 
 	const modifyUserPoints= (addNew)=>{
 
@@ -239,13 +255,11 @@
 		
 	}
 
+
+
 	const userWins = ()=>{
 
-		
-		gameConfig.currentRow= 0
-		gameConfig.currentColumn= -1
-		gameConfig.winsNumber+= 1
-		gameConfig.trys= [[],[],[],[]]
+		resetGameDefaultValues(false)
 		
 		
 		modifyUserPoints(true)
@@ -266,10 +280,13 @@
 		
 	}
 
+
 	
 	const resetDefaultCoords = (e)=>{
 		if(e.key == 'Enter') resetGame(resetDefaultCoords)
 	}
+
+
 
 	const resetGame = async(resetDefaultCoords)=>{
 
@@ -285,7 +302,7 @@
 		
 		moveSlidingLeft()
 		createNewGameDisplay()
-		resetGameDefaultValues()
+		resetGameDefaultValues(true)
 
 
 		window.removeEventListener('keydown', resetDefaultCoords)
@@ -299,7 +316,7 @@
 			currentAnswer.innerHTML = `--> Respuesta: ${gameConfig.currentWord} <--`		
 
 			
-			resetGameDefaultValues()
+			resetGameDefaultValues(true)
 			
 			
 			winAnimation(false)
@@ -325,14 +342,15 @@
 
 		}
 
+		
 
 		// este es para comfirmar solo la ultima fila (con este pierdes)	
 		if(gameConfig.trys[3].length == gameConfig.currentWord.length){
 
-			let win= gameConfig.trys[gameConfig.currentRow].find(b=> b == false)
+			let lose= gameConfig.trys[gameConfig.currentRow].find(b=> b == false)
 
 			// si 'false', pierdes.
-			if(win == false) userLose()
+			if(lose == false) userLose()
 
 		}
 
@@ -371,13 +389,20 @@
 		}
 
 		currentBox.classList.add('scale-down-animation')
+
+
+		
 		
 		verifyWin(bool)
+
 
 	}
 
 
 	// Esta funcionalidad todabia esta en proceso!!
+
+	// De pana no se como implementar esto, bueno hasta aqui llego el primer intento de hacer un juego xD 05/21/2022
+	
 
 	// const lineJump = ()=>{
 
@@ -387,10 +412,18 @@
 			
 	// 		for (let i = 0; i < gameConfig.currentWord.length; i++){			
 	// 			currentGameContainer.children[gameConfig.currentRow].children[i].classList.add('letter-wrong', 'scale-down-animation')
-	// 			gameConfig.trys[gameConfig.currentRow][i] = false
+
+	// 			gameConfig.currentColumn += 1
+				
+	// 			verifyWin(false)
+
 	// 		}
+
+
 			
 	// 		gameConfig.currentRow += 1
+
+	// 		console.log(gameConfig.trys)
 	// }
 
 
@@ -421,24 +454,49 @@
 			}else{
 
 				// cambiar de row
-
+				
 				gameConfig.currentColumn = 0
 				gameConfig.currentRow += 1 
-
+				
 				rows[gameConfig.currentRow].children[gameConfig.currentColumn].textContent = k
 				// console.log('row: ' + gameConfig.currentRow, 'Col: ' + gameConfig.currentColumn)
-
+				
 				let currentBox = rows[gameConfig.currentRow].children[gameConfig.currentColumn]
 				verifyLetterMatch(k, currentBox)
 				
+				
+				
+				
 			}
+
+			// esto esta en progreso
+			// let theseRows = document.querySelectorAll('.gameContainer')[gameConfig.winsNumber]
+
+			// console.log(theseRows.children.length)
+
+			// for(let i = 0; i < theseRows.children.length; i++){
+
+			// theseRows.children[i].classList.remove('currentRow')
+
+			// }
+
+			// theseRows.children[gameConfig.currentRow].classList.add('currentRow')
 
 	}
 
 	const keyUpHandler = (letter)=>{
-		gameConfig.correctKeys.map(correct=> { // esto filtra que letras activan la insercion de letra.
-			if(letter == correct) insertLetter(letter.toUpperCase())
+
+
+		// if(letter=='Enter'){	
+		// 	if(gameConfig.currentRow < 4)  lineJump()
+		// }
+
+
+		gameConfig.correctKeys.map(correct=> { // esto filtra que letras activan la insercion de letra.		
+			if(letter == correct)insertLetter(letter.toUpperCase())
 		})
+
+
 	}
 
 
@@ -447,5 +505,6 @@
 		keyUpHandler(e.key)
 
 	})
+
 
 
